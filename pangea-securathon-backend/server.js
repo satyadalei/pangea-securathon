@@ -13,6 +13,7 @@ app.get("/",(req,res)=>{
         "msg":"You have reached Pangea securathon server",
         "Keep" :":)--> Smilling"
     });
+    
 })
 //all user related stuffs will be in userRoute (create user, fetch user,login user)
 app.use("/api/user", require("./routes/userRoute"));
