@@ -5,7 +5,12 @@ const user = require("../models/userModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+//require services from pangea.js
+const {audit,userIntel,clientIpAddress,hostIpAddress} = require('../pangea/pangea');
+const authenticateUser = require("../middlewares/authenticateUser");
+
+
 // Start-- create new user -- this route will create new user
 router.post("/createUser",
     [
@@ -35,32 +40,75 @@ router.post("/createUser",
             if (findUser) {
                 msg = "user exists";
                 detailMsg = "Please login"
+                //*******pangea service - audit.log
+                audit.log({
+                    actor: email,
+                    action: "create user",
+                    status: "failure",
+                    target:`${hostIpAddress(req)}`,
+                    source:`${clientIpAddress(req)}`,
+                    message: "user already exists",
+                })
                 res.status(400).json({
                     "msg": msg,
                     "detail msg": detailMsg,
                     "success": false
-                })
-            } else {
-                // encrypt their password first
-                const salt = bcrypt.genSaltSync(saltRounds);
-                const hashedPassword = bcrypt.hashSync(password, salt);
-                const newUser = new user({
-                    email: email,
-                    userDetails: {
-                        fName: fName,
-                        lName: lName,
-                        password: hashedPassword
-                    }
                 });
-                await newUser.save();
-                //find that user and send back with token
-                const jwtToken = jwt.sign({userId : newUser._id },process.env.JWT_SECRET);
-                msg = "new user created";
-                res.json({
-                    "msg": msg,
-                    "token" : jwtToken,
-                    "success": true
-                })
+            } else {
+                //*******pangea service - user intel - to detect if user email is breached
+                const requestEmailOptions = {email: email, verbose: true, raw: true };
+                const emailCheckResponse = await userIntel.userBreached(requestEmailOptions);
+                const isBreached = emailCheckResponse.result.data.found_in_breach;
+                const breachCount = emailCheckResponse.result.data.breach_count;
+                //emailCheckResponse.result.data.found_in_breach = true
+                //emailCheckResponse.result.data.breach_count = 1 or 3
+                // encrypt their password first
+                if (isBreached) {
+                    audit.log({
+                        actor: email,
+                        action: "create User",
+                        status: "false",
+                        target:`${hostIpAddress(req)}`,
+                        source:`${clientIpAddress(req)}`,
+                        message: `user email is breached with ${breachCount} times`,
+                    })
+                    res.json({
+                        "msg": "email breached",
+                        "success": false,
+                        "detailMsg" : "Try using another email"
+                    })
+                }else{
+                    const salt = bcrypt.genSaltSync(saltRounds);
+                    const hashedPassword = bcrypt.hashSync(password, salt);
+                    const newUser = new user({
+                        email: email,
+                        userDetails: {
+                            fName: fName,
+                            lName: lName,
+                            password: hashedPassword
+                        }
+                    });
+                    await newUser.save();
+                    //find that user and send back with token
+                    const jwtToken = jwt.sign({user : {userId : newUser._id}},process.env.JWT_SECRET);
+                    
+                    msg = "new user created";
+                    //*******pangea service - audit.log
+                    audit.log({
+                        actor: email,
+                        action: "create User",
+                        status: "success",
+                        target:`${hostIpAddress(req)}`,
+                        source:`${clientIpAddress(req)}`,
+                        message: "user created successfully",
+                    })
+                    res.json({
+                        "msg": msg,
+                        "token" : jwtToken,
+                        "success": true
+                    })
+                }    
+            //end of saving user to db    
             }
         }
 });
@@ -96,19 +144,34 @@ router.post("/loginUser",
            const {email,password} = req.body;
            const findThatUser = await user.findOne({email:email});
            if (!findThatUser) {
-              msg = "user notfound",
-              detailMsg = "Please loin with correct credentials",
-              success = false;
+              //*******pangea service - audit.log
+              audit.log({
+                    actor: email,
+                    action: "login User",
+                    status: "failure",
+                    target:`${hostIpAddress(req)}`,
+                    source:`${clientIpAddress(req)}`,
+                    message: "user notfound",
+               })
                res.status(400).json({
-                "msg" : msg,
-                "sucess" : success,
-                "detailMsg" : detailMsg
+                "msg" : "user notfound",
+                "sucess" : false,
+                "detailMsg" : "Please loin with correct credentials"
                })
            }else{
              //user found now check password 
              const isPassMatched = bcrypt.compareSync(password, findThatUser.userDetails.password);
              if (isPassMatched) {
-                const jwtToken = jwt.sign({userId : findThatUser._id },process.env.JWT_SECRET);
+                const jwtToken = jwt.sign({user : {userId : findThatUser._id}},process.env.JWT_SECRET);
+                //*******pangea service - audit.log
+                audit.log({
+                    actor: email,
+                    action: "login user",
+                    status: "success",
+                    target:`${hostIpAddress(req)}`,
+                    source:`${clientIpAddress(req)}`,
+                    message: "user logedin successfully",
+                })
                 res.json({
                     "msg" : "user logedin",
                     "sucess" : true,
@@ -116,6 +179,15 @@ router.post("/loginUser",
                 })
              }else{
                 //password did not matched
+                //*******pangea service - audit.log
+                audit.log({
+                    actor: email,
+                    action: "login user",
+                    status: "failure",
+                    target:`${hostIpAddress(req)}`,
+                    source:`${clientIpAddress(req)}`,
+                    message: "incorrect password",
+                })
                 res.status(400).json({
                     "msg" : "incorrect password",
                     "sucess" : false,
@@ -130,7 +202,16 @@ router.post("/loginUser",
 // Ends --logIn user -- this route logIns user
 
 // Starts -- fetch user -- this route fetches user and send details of user
-
+router.get("/fetchUser",authenticateUser, async (req,res)=>{
+    // this route is protect as authenticateUser middleware passed
+    const userId = req.user.userId;
+    const findThatUser = await user.findById(userId).select("-userDetails.password");
+    res.json({
+        "msg":"user sent",
+        "success": true,
+        "user": findThatUser
+    })
+})
 // Ends -- fetch user -- this route fetches user and send details of user
 
 module.exports = router;
