@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main-container{
+    background-color: #4a5dd6;
+    min-height: 100vh;
+    max-height: max-content;
+    display: flex;
+}
+.left-illustration{
+    width: 50%;
+    height: fit-content;
+    min-height: 100vh;
+    max-height: 500px !important;
+    position: relative;
+}
+.illustration-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid red;
+    width: 80%;
+    max-width: 600px;
+    height: 70%;
+    max-height: 500px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.illustration-box h2{
+    height: 10vh;
+    font-size:2rem;
+    color: white;
+}
+.illustration-box .illustration-img{
+    margin-top: 2rem;
+    width: 80%;
+    height: 60%;
+    border: 2px solid red;
+}
+.right-form{
+    width: 50%;
+    min-height: 100vh;
+    max-height: fit-content;
+    background-color: #edfffb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.right-form .form-box{
+    /* height: 80%; */
+    height: fit-content;
+    width: 90%;
+    max-width: 600px;
+    border: 1px solid red;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+.actual-form{
+    width: 80%;
+}
+label{
+    display: block;
+    margin: 0.1rem 0 0.2rem 0;
+    font-size: 0.9rem;
+    color: grey;
+}
+input{
+    display: block;
+    outline: none;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid rgba(128, 128, 128, 0.626);
+    padding:0.2rem 0 0.2rem 0.5rem;
+    background-color: #edfffb;
+}
+p a{
+    text-decoration: none;
+    color: #4E568F;
+    font-weight: bold;
+}
+p.forget-password{
+    text-align: right;
+}
+.login{
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    font-size: 1.3rem;
+    background-color: #4A5DD6;
+    color: white;border: none;
+}
+p.register{
+    font-weight: bold;
+    text-align: center;
+}
+.name-input, #registration-password-inputs{
+    display: flex;
+    justify-content: space-between;
+}
+.name-input .fname{
+    margin-right: 1rem;
+}
+#registration-password-inputs .password{
+    margin-right: 1rem;
+}
+@media only screen and (max-width: 800px) {
+    .left-illustration{
+        display: none;
+    }
+    .right-form{
+      width: 100%;
+    }
+  }
