@@ -4,7 +4,10 @@ const connectToDataBase = require("./database");
 const bodyParser = require("body-parser");
 const { audit } = require('./pangea/pangea');
 const cors = require("cors");
+const multer = require("multer");
 // connect to data base
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 connectToDataBase();
 const app = express();
 // to send back data as response in json format
@@ -24,7 +27,7 @@ app.get("/",(req,res)=>{
 // #### ROUTES #####  ROUTES ########  ROUTES ######## 
 //all user related stuffs will be in userRoute (create user, fetch user,login user)
 app.use("/api/user", require("./routes/userRoute"));
-app.use("/api/updateUserData",require("./routes/updateUserDataRoute"));
+app.use("/api/updateUserData",upload.single('image'),require("./routes/updateUserDataRoute"));
 
 
 

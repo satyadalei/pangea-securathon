@@ -22,13 +22,13 @@ const Dashboard = () => {
   },[loginStatus])
   return (
     <div>
-        <Box>
-      <Navbar />
-      <Stack direction="row" spacing={2} justifyContent="space-between" >
-        <LeftSideBar />
-        <Feeds />
-        <RightSideBar />
-      </Stack>
+    <Box>
+        <Navbar />
+        <Stack direction="row" spacing={2} justifyContent="space-between" >
+          <LeftSideBar />
+          <Feeds />
+          <RightSideBar />
+        </Stack>
     </Box>
     </div>
   )

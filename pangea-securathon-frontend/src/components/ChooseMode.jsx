@@ -8,7 +8,7 @@ const ChooseMode = () => {
   const {setAlert} = AlertContext;
   const hostApi = process.env.REACT_APP_API_URL;
   const UserContext = useContext(userContext);
-  const {user,setUser,fetchUser} = UserContext;
+  const {user,setUser} = UserContext;
 
   const updateData = async (update)=>{
     const url = `${hostApi}/api/updateUserData/updateMode`;
@@ -139,13 +139,6 @@ const ChooseMode = () => {
               label="Fatigue"
             />
           </RadioGroup>
-        </div>
-        {/* all previous modes */}
-        <div>
-          {Object.keys(user).length !== 0 ? 
-          user.modeLists.map((modeDetails,index)=>{
-            return (<p key={index} >{modeDetails.mode}</p>)
-          }) : ""}
         </div>
       </Box>
     </>

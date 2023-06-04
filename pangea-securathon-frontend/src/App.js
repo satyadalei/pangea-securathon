@@ -8,6 +8,8 @@ import Alert from "./components/Alert";
 import Dashboard from "./components/Dashboard";
 import LoadingStates from "./context/loading/loadingstate";
 import UserStates from "./context/userDetails/userStates";
+import ProfilePage from "./components/ProfilePage";
+import TrackEmotionsPage from "./components/TrackEmotionsPage";
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/registration" element={<Registration/>} />
+          <Route path="/trackemotions" element={<TrackEmotionsPage/>} />
         </Routes>
       </BrowserRouter>
     </LoadingStates>
