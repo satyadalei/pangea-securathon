@@ -1,7 +1,63 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "../css/login-registration.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logInContext from "../context/loginStatus/loginContext";
+import alertContext from "../context/alert/alertContext";
+import loadingContext from "../context/loading/loadingContext";
+
+
 const Login = () => {
+  const navigate = useNavigate();
+  const LogIncontext = useContext(logInContext);
+  const {setLoginStatus } = LogIncontext;
+  const LoadingContext = useContext(loadingContext);
+  const {setLoading} = LoadingContext;
+  const AlertContext = useContext(alertContext);
+  const {setAlert} = AlertContext;
+  const [loginCredentials, setLoginCredentials] = useState({
+    email: "",
+    password: ""
+  });
+  const handleChange = (e) => {
+    setLoginCredentials((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
+  const hostApi = process.env.REACT_APP_API_URL;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const url = `${hostApi}/api/user/loginUser`
+    const logInUser = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json"
+      },
+      body: JSON.stringify(loginCredentials)
+    })
+    const loginResponse = await logInUser.json();
+    // console.log(loginResponse);
+    if (loginResponse.success && loginResponse.msg === "user logedin") {
+      localStorage.setItem("authtoken", loginResponse.token);
+      setLoginStatus(true);
+      setAlert({
+        alertMsg:"You are logedIn successfully",
+        alertType:"success"
+      });
+      navigate("/dashboard")
+      setLoading(false);
+    } else {
+      // give alert message keeping credentials in form
+      setAlert({
+        alertMsg:loginResponse.msg,
+        alertType:"danger"
+      })
+      setLoading(false);
+    }
+  }
+
+
   return (
     <div className="main-container">
       <div className="left-illustration">
@@ -22,16 +78,16 @@ const Login = () => {
             <form>
               <div className="email-input my-3">
                 <label htmlFor="email">Email</label>
-                <input type="email" name="email" autoComplete="off" />
+                <input onChange={handleChange} type="email" value={loginCredentials.email} name="email" autoComplete="of" />
               </div>
               <div className="password-input my-3">
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" />
+                <input onChange={handleChange} type="password" value={loginCredentials.password} name="password" />
               </div>
               <p className="forget-password">
                 <a href="/">Forget Password?</a>
               </p>
-              <button className="login my-2">Login</button>
+              <button onClick={handleSubmit} className="login my-2">Login</button>
             </form>
             <p className="register my-2">
               Is this your first time?
