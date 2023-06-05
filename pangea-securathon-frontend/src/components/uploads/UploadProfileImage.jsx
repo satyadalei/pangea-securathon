@@ -1,33 +1,38 @@
 import React, { useState } from 'react'
-
+// import axios from 'axios';
 const UploadProfileImage = () => {
 
-    const [file, setFile] = useState()
+    const [file, setFile] = useState({
+        preview:"",
+        data:""
+    })
 
     const handleFile = (e) => {
-        console.log(e.target.files);
+        const img = {
+            preview : URL.createObjectURL(e.target.files[0]),
+            data: e.target.files[0]
+        }
         setFile(()=>{
-            return URL.createObjectURL(e.target.files[0])
+            return img;
         });
+        
     }
 
-    console.log(file);
+    // console.log(file.data);
     const hostApi = process.env.REACT_APP_API_URL;
 
     const handleProfileUpload = async() => {
-        if (!file) {
+        if (file.data === "") {
             return;
         }else{
             const url = `${hostApi}/api/updateUserData/profileImage`;
             const formData = new FormData();
-            formData.append('image', file);
-            console.log(file,24);
-            console.log(formData,25);
+            formData.append('userName', "Satyanarayan");
+            formData.append('file', file.data);
             const authToken = localStorage.getItem("authtoken")
             const uploadFile = await fetch(url,{
                 method:"POST",
                 headers:{
-                    "content-type": "image/jpeg" || "image/png",
                     "authtoken":authToken
                 },
                 body:formData
@@ -37,22 +42,25 @@ const UploadProfileImage = () => {
         }
     }
     const handleFileRemove = () => {
-        setFile(null)
+        setFile({
+            preview:"",
+            data:""
+        })
     }
     return (
         <div>
             <h2>Add Image:</h2>
-                <input id='file-input' name='image' type="file" onChange={handleFile} accept='.png, .jpeg, .jpg'
-                value={!file ? "" : file.name}
+                <input id='file-input' type="file" onChange={handleFile} accept='image/png, image/jpeg'
                 required />
             {
-             !file ?"" : <img style={{ width: "200px" }} src={!file ? "" : file} alt='uploaded file' />
+             file.data !== "" && <img style={{ width: "200px" }} src={file.preview} alt='uploaded file' />
             }
             <br />
             <br />
             <button onClick={handleProfileUpload} type='button' >Upload</button> <br />
             {
-              !file ?"" : <button onClick={handleFileRemove} type='button' >Remove file</button>
+              file.data === "" ?"" : 
+              <button onClick={handleFileRemove} type='button' >Remove file</button>
             }
         </div>
     )

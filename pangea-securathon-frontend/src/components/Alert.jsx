@@ -13,7 +13,7 @@ const Alert = () => {
         setTimeout(hideMessage, 5000);
     }, [alert])
     return (
-        <div id='alertBox' style={{ position: "absolute", border: "1px solid red", width: "100vw", display: "flex", justifyContent: "space-between",zIndex:"5000" }} className={`alert alert-${alert.alertType}`} role="alert">
+        <div id='alertBox' style={{ position: "absolute", width: "100vw", display: "flex", justifyContent: "space-between",zIndex:"5000" }} className={`alert alert-${alert.alertType}`} role="alert">
             <p>{alert.alertMsg}</p>
         </div>
     )
