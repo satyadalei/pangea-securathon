@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Avatar, Box, Button, ButtonGroup, Fab, FormControl, InputLabel, MenuItem, Modal, Select, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import loadingContext from "../context/loading/loadingContext"
 import { Add } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import userContext from "../context/userDetails/userContext"
 import ImageIcon from '@mui/icons-material/Image';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from "react-router-dom";
-
+import Loading from "./Loading";
+import alertContext from "../context/alert/alertContext"
 const StyledModal = styled(Modal)({
     display: "flex",
     alignItems: "center",
@@ -23,6 +25,10 @@ const StyledStack = styled(Stack)({
 })
 
 const CreatePost = () => {
+    const LoadingContext = useContext(loadingContext);
+    const {loading,setLoading} = LoadingContext;
+    const AlertContext = useContext(alertContext);
+    const {setAlert} = AlertContext;
     const navigate = useNavigate();
     const hostApi = process.env.REACT_APP_API_URL;
     const [open, setOpen] = useState(false);
@@ -65,6 +71,8 @@ const CreatePost = () => {
         if (file.data === "" && file.textData === "") {
             return;
         } else {
+            setLoading(true);
+            setOpen(false);
             const url = `${hostApi}/api/posts/uploadPost`;
             const authToken = localStorage.getItem("authtoken");
             const formData = new FormData();
@@ -80,17 +88,41 @@ const CreatePost = () => {
             })
             const uploadPostResponse = await uploadPost.json();
             if (uploadPostResponse.msg === "post uploaded") {
-                console.log("post uploaded");
+                //post uploade successfully
+                setLoading(false);
+                setAlert({
+                    alertMsg:uploadPostResponse.detailMsg,
+                    alertType: "success"
+                });
+                setFile({
+                    preview: "",
+                    data: "",
+                    link: "",
+                    textData: "",
+                    postType: ""
+                })
             } else if (uploadPostResponse.msg === "unauthorised access") {
+                setLoading(false);
+                setAlert({
+                    alertMsg:"Error in uploading",
+                    alertType: "danger"
+                })
                 navigate("/");
             }else{
+                setLoading(false);
+                navigate("/");
                 console.log("There is error");
+                setAlert({
+                    alertMsg:"Error in uploading",
+                    alertType: "danger"
+                })
             }
         }
     }
     return (
         <>
             <div>
+                {loading && <Loading/>}
                 <Box  style={{position: "fixed", zIndex: '300'}} >
                     <Tooltip onClick={(e) => { setOpen(true) }} title="Add">
                         <Fab sx={{margin:"1rem 0.5rem 1rem 0"}} color="primary" aria-label="add">

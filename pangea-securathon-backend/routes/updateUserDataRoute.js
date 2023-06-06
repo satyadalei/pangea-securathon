@@ -58,6 +58,7 @@ router.post("/profileImage", authenticateUser, upload.single('file'), async (req
 
   //2.check  profile image if previosly exists
   let uploadTask;
+  let uploadedDocUrl;
   if (findThatUser.profileImg.url === "") {
       //mesns does not exist previouly -> directly save to firebase
       if (req.file.mimetype === "image/jpeg" || req.file.mimetype === "image/png") {
