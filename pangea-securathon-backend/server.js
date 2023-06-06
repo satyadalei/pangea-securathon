@@ -25,7 +25,7 @@ app.get("/",(req,res)=>{
 //all user related stuffs will be in userRoute (create user, fetch user,login user)
 app.use("/api/user", require("./routes/userRoute"));
 app.use("/api/updateUserData",require("./routes/updateUserDataRoute"));
-
+app.use("/api/posts",require("./routes/posts"));
 
 
 

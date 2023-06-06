@@ -7,7 +7,8 @@ const RightSideBar = () => {
       <Box flex={2} bgcolor="skyblue" sx={{
         display: {
           xs: "none", sm: "block"
-        }
+        },
+        minHeight:"100vh"
       }}>
         <Box sx={{ position: "fixed" }} >
           <Typography variant='h6' fontWeight={100} >

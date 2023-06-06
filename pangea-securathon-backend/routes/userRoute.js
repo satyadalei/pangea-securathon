@@ -21,7 +21,6 @@ router.post("/createUser",
     async (req, res) => {
         const result = validationResult(req);
         let msg;
-        let detailMsg;
         let success;
         // means error in user credentials 
         if (result.errors.length != 0) {

@@ -1,7 +1,16 @@
-import React, { useState } from 'react'
-// import axios from 'axios';
-const UploadProfileImage = () => {
+import React, { useContext, useState } from 'react'
+import alertContext from "../../context/alert/alertContext"
+import userContext from '../../context/userDetails/userContext';
+import loadingContext from "../../context/loading/loadingContext"
+import Loading from '../Loading';
 
+const UploadProfileImage = () => {
+    const AlertContext = useContext(alertContext);
+    const {setAlert} = AlertContext;
+    const UserContext = useContext(userContext);
+    const {fetchUser,user} = UserContext;
+    const LoadingContext = useContext(loadingContext);
+    const {loading,setLoading} = LoadingContext;
     const [file, setFile] = useState({
         preview:"",
         data:""
@@ -15,16 +24,15 @@ const UploadProfileImage = () => {
         setFile(()=>{
             return img;
         });
-        
     }
 
     // console.log(file.data);
     const hostApi = process.env.REACT_APP_API_URL;
-
     const handleProfileUpload = async() => {
         if (file.data === "") {
             return;
         }else{
+            setLoading(true)
             const url = `${hostApi}/api/updateUserData/profileImage`;
             const formData = new FormData();
             formData.append('userName', "Satyanarayan");
@@ -39,28 +47,65 @@ const UploadProfileImage = () => {
             });
             const uploadFileResponse = await uploadFile.json();
             console.log(uploadFileResponse);
+            if(uploadFileResponse.success){
+              //profile picture updated successfully -> set alert + update user
+                fetchUser();
+                setAlert({
+                        alertMsg:uploadFileResponse.detailMsg,
+                        alertType: "success"
+                });
+                setFile({
+                    preview:"",
+                    data:""
+                })
+                document.getElementById("file-input").value = "";
+                setLoading(false)
+            }else{
+                setAlert({
+                    alertMsg:"There is an error updating your profile",
+                    alertType: "danger"
+                });
+                setLoading(false)
+            }
         }
     }
     const handleFileRemove = () => {
         setFile({
             preview:"",
             data:""
-        })
+        });
+        document.getElementById("file-input").value = "";
     }
     return (
-        <div>
-            <h2>Add Image:</h2>
+        <div style={{marginTop:"1rem"}} >
+            {loading && <Loading/> }
+            <div>
+            {
+                Object.keys(user).length !== 0 &&
+                user.profileImg.url !== "" &&  <h6>Your previous profile picture</h6>
+            }
+            {
+             Object.keys(user).length !== 0 &&
+             user.profileImg.url !== "" ?
+             <img style={{width:"30%"}} src={user.profileImg.url} alt='uploaded file' /> : 
+             <h5>You have not uploaded any image yet</h5>
+            }
+            
+            {/* <img style={{width:"30%"}} src={Object.keys(user).length === 0 ? "" : user.profileImg ? user.profileImg.url : ""} alt='uploaded file' /> */}
+            </div>
+            <h5 style={{marginTop:"1rem"}} >To update profile Image Choose file below:</h5>
                 <input id='file-input' type="file" onChange={handleFile} accept='image/png, image/jpeg'
                 required />
             {
-             file.data !== "" && <img style={{ width: "200px" }} src={file.preview} alt='uploaded file' />
-            }
-            <br />
-            <br />
-            <button onClick={handleProfileUpload} type='button' >Upload</button> <br />
-            {
               file.data === "" ?"" : 
+              <div style={{marginTop:"1rem"}} >
+              <button onClick={handleProfileUpload} type='button' >Update</button> &nbsp; &nbsp;
               <button onClick={handleFileRemove} type='button' >Remove file</button>
+              </div>
+            } 
+            <br />
+            {
+             file.data !== "" && <img style={{ width: "200px" }} src={file.preview} alt='uploaded file' />
             }
         </div>
     )

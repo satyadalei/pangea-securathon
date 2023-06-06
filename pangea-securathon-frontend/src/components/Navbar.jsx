@@ -62,7 +62,7 @@ const {user, setUser,fetchUser} = UserContext;
             </Typography>
             <Avatar sx={{width:"30",height:"30"}} 
             alt={Object.keys(user).length === 0 ? "" :user.userDetails.fName} 
-            src=""
+            src={Object.keys(user).length === 0 ? "" : user.profileImg ? user.profileImg.url : ""}
             onClick={e =>{setOpen(true)}} />
         </Icons>
         <UserBox  onClick={e =>{setOpen(true)}} sx={{ display: { xs: "flex", sm: "none" } }} >
@@ -72,7 +72,7 @@ const {user, setUser,fetchUser} = UserContext;
                 <Avatar sx={{width:"30",height:"30"}}
                 // to check whether there is empty object or not -> coz if is is empty object then user.userDetails.fName can not be accessed
                 alt={Object.keys(user).length === 0 ? "" : user.userDetails.fName} 
-                src=""
+                src={Object.keys(user).length === 0 ? "" : user.profileImg ? user.profileImg.url : ""}
                  />
         </UserBox>
       </StyledToolbar>

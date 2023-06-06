@@ -3,11 +3,15 @@ import {Link, useNavigate } from "react-router-dom";
 import alertContext from "../context/alert/alertContext"
 import loadingContext from "../context/loading/loadingContext";
 import Loading from "./Loading";
+import logInContext from "../context/loginStatus/loginContext";
+
 const Registration = () => {
   const navigate = useNavigate();
   const AlertContext = useContext(alertContext);
   const {setAlert} = AlertContext;
   const LoadingContext = useContext(loadingContext);
+  const LoginContext = useContext(logInContext);
+  const {setLoginStatus} = LoginContext;
   const {setLoading,loading} = LoadingContext;
   const [credentials, setCredentials] = useState({
     fName:"",
@@ -44,9 +48,10 @@ const Registration = () => {
         body:JSON.stringify({email,fName,lName,password})
       })
       const createUserResponse = await createUser.json();
-      console.log(createUserResponse);
       if (createUserResponse.msg === "new user created") {
         setLoading(false);
+        localStorage.setItem("authtoken",createUserResponse.token);
+        setLoginStatus(true)
         setAlert({
           alertMsg:"You have successfully registered",
           alertType:"success"
@@ -65,6 +70,23 @@ const Registration = () => {
           alertType: "danger"
         });
         setCredentials({...credentials, email:""})
+      }else if(createUserResponse.msg  === "new user created with breached email"){
+        setLoading(false);
+        localStorage.setItem("authtoken",createUserResponse.token)
+        setAlert({
+          alertMsg: createUserResponse.detailMsg ,
+          alertType: "warning"
+        });
+        setCredentials({...credentials, email:""})  ;
+        setLoginStatus(true)
+        navigate("/dashboard");
+      }else{
+        setLoading(false);
+        setAlert({
+          alertMsg: "there is some error creating your account" ,
+          alertType: "dabger"
+        });
+        setCredentials({...credentials, email:""})  ;
       }
     }
   }

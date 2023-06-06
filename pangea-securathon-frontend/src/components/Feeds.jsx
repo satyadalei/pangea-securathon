@@ -3,10 +3,10 @@ import PostCard from './PostCard'
 import { Box } from '@mui/material'
 import ChooseMode from './ChooseMode'
 import userContext from "../context/userDetails/userContext";
+import CreatePost from './CreatePost';
 const Feeds = () => {
    const UserContext = useContext(userContext);
    const {user} = UserContext;
-   console.log(user);
    const today = new Date();
    let usersModeLastUpdated;
    if ( Object.keys(user).length !== 0) {
@@ -35,6 +35,10 @@ const Feeds = () => {
        )
     }
     {/* <ChooseMode/> */}
+    <CreatePost/>
+    <br></br>
+    <br></br>
+    <br></br>
     <PostCard/>
     <PostCard/>
     <PostCard/>

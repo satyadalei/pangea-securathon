@@ -21,7 +21,8 @@ const userSchema = new Schema({
         otherThings :{}
    },
    profileImg :{
-    type : String
+      url:{type:String,default:""},
+      givenName:{type:String,default:""}
    },
    postIds: {
      type : Array

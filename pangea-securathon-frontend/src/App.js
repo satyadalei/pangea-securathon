@@ -14,8 +14,8 @@ import TrackEmotionsPage from "./components/TrackEmotionsPage";
 function App() {
   return (
     <>
-    <UserStates>
     <LoadingStates>
+    <UserStates>
     <AlertStates>
     <LoginStates>
     <LoadingStates>
@@ -33,8 +33,8 @@ function App() {
     </LoadingStates>
     </LoginStates> 
     </AlertStates>
-    </LoadingStates>
     </UserStates>
+    </LoadingStates>
     </>
   );
 }

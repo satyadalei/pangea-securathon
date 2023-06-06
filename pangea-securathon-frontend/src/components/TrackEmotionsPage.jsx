@@ -38,12 +38,12 @@ const TrackEmotionsPage = () => {
               {Object.keys(user).length !== 0 ?
                 user.modeLists.map((modeDetails, index) => {
                   return (
-                    <>
+                    <div key={index} >
                       <Typography sx={{margin:"0.1rem 0 0.1rem 0"}} variant='p' key={index} > 
                         { convertTolacaldate(modeDetails.lastUpdated)} : {modeDetails.mode}
                       </Typography>
                       <hr></hr>
-                    </>
+                    </div>
                   )
                 })
                 : ""}
