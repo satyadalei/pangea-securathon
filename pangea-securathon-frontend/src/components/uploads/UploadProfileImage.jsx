@@ -35,7 +35,6 @@ const UploadProfileImage = () => {
             setLoading(true)
             const url = `${hostApi}/api/updateUserData/profileImage`;
             const formData = new FormData();
-            formData.append('userName', "Satyanarayan");
             formData.append('file', file.data);
             const authToken = localStorage.getItem("authtoken")
             const uploadFile = await fetch(url,{
@@ -87,7 +86,7 @@ const UploadProfileImage = () => {
             {
              Object.keys(user).length !== 0 &&
              user.profileImg.url !== "" ?
-             <img style={{width:"30%"}} src={user.profileImg.url} alt='uploaded file' /> : 
+             <img style={{height:"200px"}} src={user.profileImg.url} alt='uploaded file' /> : 
              <h5>You have not uploaded any image yet</h5>
             }
             
@@ -105,7 +104,7 @@ const UploadProfileImage = () => {
             } 
             <br />
             {
-             file.data !== "" && <img style={{ width: "200px" }} src={file.preview} alt='uploaded file' />
+             file.data !== "" && <img style={{ height: "180px" }} src={file.preview} alt='uploaded file' />
             }
         </div>
     )
