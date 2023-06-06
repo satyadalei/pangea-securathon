@@ -61,7 +61,7 @@ const UploadProfileImage = () => {
                 setLoading(false)
             }else{
                 setAlert({
-                    alertMsg:"There is an error updating your profile",
+                    alertMsg:uploadFileResponse.detailMsg,
                     alertType: "danger"
                 });
                 setLoading(false)

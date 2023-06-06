@@ -84,7 +84,7 @@ router.post("/profileImage", authenticateUser, upload.single('file'), async (req
         res.json({
           "msg":"not valid file",
           "success": false,
-          "detailMsg":"Please upload an valid image file i.e. .PNG or .JPEG"
+          "detailMsg":"Please upload an valid image file type i.e. .PNG or .JPEG"
         })
       }
   }else{
@@ -113,6 +113,11 @@ router.post("/profileImage", authenticateUser, upload.single('file'), async (req
           });
     }).catch((error) => {
         console.log(error);
+        res.json({
+          "msg":"internal error",
+          "success": false,
+          "detailMsg":"There is an error updating profile picture"
+        })
     });
   }
   //profile update successfully

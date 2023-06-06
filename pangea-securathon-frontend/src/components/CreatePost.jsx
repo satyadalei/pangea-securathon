@@ -48,12 +48,14 @@ const CreatePost = () => {
             ...file,
             [e.target.name]: e.target.value
         })
-        console.log(file);
     }
     const handleRemove = (e) => {
         setFile({
             preview: "",
-            data: ""
+            data: "",
+            link: "",
+            textData: "",
+            postType: ""
         })
         document.getElementById("file-input-id").value = "";
     }
