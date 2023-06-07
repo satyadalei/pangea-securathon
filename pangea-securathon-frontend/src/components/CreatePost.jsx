@@ -33,7 +33,7 @@ const CreatePost = () => {
     const hostApi = process.env.REACT_APP_API_URL;
     const [open, setOpen] = useState(false);
     const UserContext = useContext(userContext);
-    const { user } = UserContext;
+    const { user,fetchUser } = UserContext;
 
     const [file, setFile] = useState({
         preview: "",
@@ -100,18 +100,28 @@ const CreatePost = () => {
                     link: "",
                     textData: "",
                     postType: ""
-                })
+                });
+                fetchUser();
             } else if (uploadPostResponse.msg === "unauthorised access") {
                 setLoading(false);
+                localStorage.clear();
                 setAlert({
                     alertMsg:"Error in uploading",
                     alertType: "danger"
                 })
                 navigate("/");
+            }else if(uploadPostResponse.msg === "malicious link"){
+                setLoading(false);
+                setAlert({
+                    alertMsg:uploadPostResponse.detailMsg,
+                    alertType: "danger"
+                })
+                setFile({
+                    ...file,
+                    link: "",
+                })
             }else{
                 setLoading(false);
-                navigate("/");
-                console.log("There is error");
                 setAlert({
                     alertMsg:"Error in uploading",
                     alertType: "danger"

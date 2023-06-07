@@ -21,8 +21,8 @@ const connectToDataBase = async () => {
             //*******pangea service - audit.log
             audit.log({
                 action: "connect to database",
-                status: "success",
-                message: "Database connected successfully",
+                status: "failure",
+                message: "Error in connecting to Database.",
             })
         } else {
             console.log("Database connection failed");
