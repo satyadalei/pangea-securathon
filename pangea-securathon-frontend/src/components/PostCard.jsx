@@ -1,25 +1,31 @@
 import React from 'react'
 import { Bookmark, BookmarkAddOutlined, Favorite, FavoriteBorder } from '@mui/icons-material'
 import { Avatar,Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
+
 const PostCard = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Card sx={{margin:"0.3rem 0 0.3rem 0"}}>
-        <CardHeader
+        <CardHeader 
+          sx={{cursor:"pointer"}}
+          onClick={()=>{navigate("/users/profile")}}
           avatar={
-            <Avatar sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
+            <Avatar  sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
               R
             </Avatar>
           }
-          action={
-            <IconButton >
-              <Checkbox
-                // {...label}
-                icon={<BookmarkAddOutlined />}
-                checkedIcon={<Bookmark />}
-              />
-            </IconButton>
-          }
+          // action={
+          //   <IconButton >
+          //     <Checkbox
+          //       // {...label}
+          //       icon={<BookmarkAddOutlined />}
+          //       checkedIcon={<Bookmark />}
+          //     />
+          //   </IconButton>
+          // }
           title="Shrimp Mark"
         //   subheader="September 14, 2016"
         />
@@ -40,9 +46,13 @@ const PostCard = () => {
           <IconButton aria-label="add to favorites">
             <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}} />} />
           </IconButton>
-          <IconButton aria-label="share">
-            {/* <ShareIcon /> */}
-          </IconButton>
+          <IconButton >
+              <Checkbox
+                // {...label}
+                icon={<BookmarkAddOutlined />}
+                checkedIcon={<Bookmark />}
+              />
+            </IconButton>
         </CardActions>
       </Card>  
     </>

@@ -10,10 +10,13 @@ import LoadingStates from "./context/loading/loadingstate";
 import UserStates from "./context/userDetails/userStates";
 import ProfilePage from "./components/ProfilePage";
 import TrackEmotionsPage from "./components/TrackEmotionsPage";
+import OtherUserProfilePage from "./components/otherUsersProfile/OtherUserProfilePage";
+import OtherUserStates from "./context/otherUserContext/otherUserStates";
 
 function App() {
   return (
     <>
+    <OtherUserStates>
     <LoadingStates>
     <UserStates>
     <AlertStates>
@@ -28,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/registration" element={<Registration/>} />
           <Route path="/trackemotions" element={<TrackEmotionsPage/>} />
+          <Route path="/users/profile" element={<OtherUserProfilePage/>} />
         </Routes>
       </BrowserRouter>
     </LoadingStates>
@@ -35,6 +39,7 @@ function App() {
     </AlertStates>
     </UserStates>
     </LoadingStates>
+    </OtherUserStates>
     </>
   );
 }

@@ -24,8 +24,12 @@ app.get("/",(req,res)=>{
 // #### ROUTES #####  ROUTES ########  ROUTES ######## 
 //all user related stuffs will be in userRoute (create user, fetch user,login user)
 app.use("/api/user", require("./routes/userRoute"));
+//to update user profile data
 app.use("/api/updateUserData",require("./routes/updateUserDataRoute"));
+// to upload post or post related stuffs
 app.use("/api/posts",require("./routes/postsRoute"));
+//To fetch other user details
+app.use("/api/otherUser",require("./routes/otherUserRoute"));
 
 
 
