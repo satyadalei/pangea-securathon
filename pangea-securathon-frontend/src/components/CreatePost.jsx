@@ -70,7 +70,12 @@ const CreatePost = () => {
         //check whether text data or image is empty --> to stop emty post
         if (file.data === "" && file.textData === "") {
             return;
-        } else {
+        }else if(file.postType === ""){
+            setAlert({
+                alertMsg:"Please select Post type",
+                alertType: "danger"
+            });
+        }else {
             setLoading(true);
             setOpen(false);
             const url = `${hostApi}/api/posts/uploadPost`;
@@ -110,6 +115,13 @@ const CreatePost = () => {
                     alertMsg:"Error in uploading",
                     alertType: "danger"
                 })
+                setFile({
+                    preview: "",
+                    data: "",
+                    link: "",
+                    textData: "",
+                    postType: ""
+                });
                 navigate("/");
             }else if(uploadPostResponse.msg === "malicious link"){
                 setLoading(false);
@@ -126,7 +138,14 @@ const CreatePost = () => {
                 setAlert({
                     alertMsg:"Error in uploading",
                     alertType: "danger"
-                })
+                });
+                setFile({
+                    preview: "",
+                    data: "",
+                    link: "",
+                    textData: "",
+                    postType: ""
+                });
             }
         }
     }

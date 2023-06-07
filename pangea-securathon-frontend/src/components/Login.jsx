@@ -4,16 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import logInContext from "../context/loginStatus/loginContext";
 import alertContext from "../context/alert/alertContext";
 import loadingContext from "../context/loading/loadingContext";
+import userContext from "../context/userDetails/userContext";
 
 
 const Login = () => {
   const navigate = useNavigate();
   const LogIncontext = useContext(logInContext);
   const {setLoginStatus } = LogIncontext;
+
   const LoadingContext = useContext(loadingContext);
   const {setLoading} = LoadingContext;
+
   const AlertContext = useContext(alertContext);
   const {setAlert} = AlertContext;
+
+  const UserContext = useContext(userContext);
+  const {fetchUser} = UserContext;
   const [loginCredentials, setLoginCredentials] = useState({
     email: "",
     password: ""
@@ -45,6 +51,7 @@ const Login = () => {
         alertMsg:"You are logedIn successfully",
         alertType:"success"
       });
+      fetchUser();
       navigate("/dashboard")
       setLoading(false);
     } else {

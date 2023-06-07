@@ -3,7 +3,7 @@ import otherUserContext from "./otherUserContext";
 
 
 const OtherUserStates = (props)=>{
-    const [otherUserId, setOtherUserId] = useState("ghghjggj");
+    const [otherUserId, setOtherUserId] = useState("");
     const [otherUser, setOtherUser] = useState({});
 
     const hostApi = process.env.REACT_APP_API_URL;
@@ -29,6 +29,7 @@ const OtherUserStates = (props)=>{
             }else{
                 //set login status to false
                 // setLoginStatus(false);
+                console.log("some error");
             }
         }
     }

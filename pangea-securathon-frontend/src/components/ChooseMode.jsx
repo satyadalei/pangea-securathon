@@ -24,7 +24,6 @@ const ChooseMode = () => {
       body: JSON.stringify(updatedData)
     })
     const updateUserModeResponse = await updateUserMode.json();
-    console.log(updateUserModeResponse);
     if (updateUserModeResponse.msg === "mode updated") {
       setAlert({
         alertMsg:updateUserModeResponse.detailMsg,
@@ -51,7 +50,6 @@ const ChooseMode = () => {
     const modeListsLength = user.modeLists.length ;
     const todayDateStamp = new Date();
     const lastindex = modeListsLength-1;
-    console.log(todayDateStamp);
     const modeDetails = {
       lastUpdated : todayDateStamp,
       mode : mode

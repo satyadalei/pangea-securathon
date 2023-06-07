@@ -4,13 +4,19 @@ import alertContext from "../context/alert/alertContext"
 import loadingContext from "../context/loading/loadingContext";
 import Loading from "./Loading";
 import logInContext from "../context/loginStatus/loginContext";
+import userContext from "../context/userDetails/userContext";
 
 const Registration = () => {
   const navigate = useNavigate();
   const AlertContext = useContext(alertContext);
   const {setAlert} = AlertContext;
+
   const LoadingContext = useContext(loadingContext);
   const LoginContext = useContext(logInContext);
+
+  const UserContext = useContext(userContext);
+  const {fetchUser} = UserContext;
+
   const {setLoginStatus} = LoginContext;
   const {setLoading,loading} = LoadingContext;
   const [credentials, setCredentials] = useState({
@@ -56,6 +62,7 @@ const Registration = () => {
           alertMsg:"You have successfully registered",
           alertType:"success"
         });
+        fetchUser()
         navigate("/dashboard");
       }else if(createUserResponse.msg === "invalid credentials"){
         setLoading(false);
@@ -79,6 +86,7 @@ const Registration = () => {
         });
         setCredentials({...credentials, email:""})  ;
         setLoginStatus(true)
+        fetchUser();
         navigate("/dashboard");
       }else{
         setLoading(false);
