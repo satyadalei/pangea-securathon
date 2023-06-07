@@ -78,6 +78,7 @@ const CreatePost = () => {
             const formData = new FormData();
             formData.append("link",file.link)
             formData.append("textData",file.textData)
+            formData.append("postType",file.postType)
             formData.append("postImage",file.data)
             const uploadPost = await fetch(url, {
                 method: "POST",

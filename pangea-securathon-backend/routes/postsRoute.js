@@ -30,6 +30,7 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
         const fileType = req.file.mimetype;
         const fileOrginalName = req.file.originalname;
         const bufferData = req.file.buffer;
+        const postType = req.body.postType;
         const textWithPost = req.body.textData;
         const linkWithPost = req.body.link;   // links provided with post --> will be checked through urlIntel of pangea
         const now = new Date();
@@ -81,8 +82,12 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
                         uploadedDocUrl = downloadURL;
                         //----------upload done now save to mongo DB ---------
                         const newPost = new post({
-                            autherId: userId,
-                            postType: fileType,
+                            auther:{
+                                id:findThatUser._id,
+                                name:findThatUser.userDetails.fName + " " + findThatUser.userDetails.lName,
+                                profileUrl: findThatUser.profileImg.url || ""
+                            },
+                            postType: postType,
                             postDeatils: {
                                 fileType: fileType,
                                 postUrl: downloadURL,
@@ -93,7 +98,7 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
                         })
                         await newPost.save();
                         //adds that posts credentials to authors post section
-                        findThatUser.postIds.push(newPost);
+                        findThatUser.posts.push(newPost);
                         findThatUser.save();
                         //everything done correctly now send response
                         res.json({

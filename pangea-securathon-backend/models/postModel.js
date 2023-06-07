@@ -6,9 +6,21 @@ const postSchema = new Schema({
         type : Date,
         default: Date.now 
     },
-    autherId:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref  : "user"
+    auther:{
+        id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref  : "user"
+        },
+        name:{
+            type: String
+        },
+        profileUrl:{
+            type: String
+        }
+    },
+    tag:{
+       type: String,
+       default: "post"
     },
     postType:{
         type: String

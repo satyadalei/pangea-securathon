@@ -24,7 +24,7 @@ const userSchema = new Schema({
       url:{type:String,default:""},
       givenName:{type:String,default:""}
    },
-   postIds: {
+   posts: {
      type : Array
    },
    friendListIds : {
