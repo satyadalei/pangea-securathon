@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Bookmark, BookmarkAddOutlined, Favorite, FavoriteBorder } from '@mui/icons-material'
 import { Avatar,Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import otherUserContext from "../context/otherUserContext/otherUserContext"
 
-
-const PostCard = () => {
+const PostCard = (props) => {
+  const OtherUserContext = useContext(otherUserContext);
+  const {setOtherUserId,fetchOtherUser} = OtherUserContext;
   const navigate = useNavigate();
+  console.log(props);
   return (
     <>
       <Card sx={{margin:"0.3rem 0 0.3rem 0"}}>
         <CardHeader 
           sx={{cursor:"pointer"}}
-          onClick={()=>{navigate("/users/profile")}}
+          onClick={()=>{
+            navigate("/users/profile");
+            fetchOtherUser(props.post.author.id)
+            }}
           avatar={
-            <Avatar  sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
-              R
+            <Avatar src={props.post.author.profileUrl} alt={props.post.author.name} sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
             </Avatar>
           }
           // action={
@@ -26,21 +31,28 @@ const PostCard = () => {
           //     />
           //   </IconButton>
           // }
-          title="Shrimp Mark"
+          title={props.post.author.name}
         //   subheader="September 14, 2016"
         />
         <CardMedia
           component="img"
           height="300"
-          image="https://images.pexels.com/photos/16952093/pexels-photo-16952093/free-photo-of-young-woman-in-a-hat-against-a-clear-blue-sky.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Paella dish"
+          image={props.post.postDetails.postUrl}
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.
-          </Typography>
+          <Typography variant="p" color="text.secondary">
+            {props.post.postDetails.postTextData}
+          </Typography> 
+          <br />
+          <br />
+          {props.post.postDetails.postLink !== "" && 
+              <Typography variant="p" color="text.secondary">
+                Added Link : 
+                <a href={props.post.postDetails.postLink}>
+                  {props.post.postDetails.postLink}
+                </a>
+              </Typography>
+          }
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">

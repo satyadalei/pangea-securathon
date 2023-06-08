@@ -6,7 +6,7 @@ const postSchema = new Schema({
         type : Date,
         default: Date.now 
     },
-    auther:{
+    author:{
         id:{
             type: mongoose.Schema.Types.ObjectId,
             ref  : "user"
@@ -35,7 +35,7 @@ const postSchema = new Schema({
     likes:{
         likedBy: []
     },
-    postDeatils:{
+    postDetails:{
         fileType:{
             type:String,
             default:""

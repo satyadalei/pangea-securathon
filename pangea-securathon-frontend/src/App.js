@@ -16,13 +16,14 @@ import OtherUserStates from "./context/otherUserContext/otherUserStates";
 function App() {
   return (
     <>
+    {/* top priority Browser router */}
+    <BrowserRouter>
     <OtherUserStates>
     <LoadingStates>
     <UserStates>
     <AlertStates>
     <LoginStates>
     <LoadingStates>
-      <BrowserRouter>
         <Alert/>
         <Routes>
           <Route path="/" element={<Home/>} />
@@ -33,13 +34,13 @@ function App() {
           <Route path="/trackemotions" element={<TrackEmotionsPage/>} />
           <Route path="/users/profile" element={<OtherUserProfilePage/>} />
         </Routes>
-      </BrowserRouter>
     </LoadingStates>
     </LoginStates> 
     </AlertStates>
     </UserStates>
     </LoadingStates>
     </OtherUserStates>
+    </BrowserRouter>
     </>
   );
 }

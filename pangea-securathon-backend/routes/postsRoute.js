@@ -184,6 +184,18 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
             "success": false
         });
     }
+});
+router.get("/fetchPosts",authenticateuser,async (req,res)=>{
+  const happyPosts = await post.find({tag:"post",postType:"happy"});
+  const jokePosts = await post.find({tag:"post",postType:"joke"});
+  const sadPosts = await post.find({tag:"post",postType:"sad"});
+ console.log("fetch post requested");
+  let allPosts = [];
+  res.json({
+    "msg":"posts send",
+    "success":true,
+    "posts":happyPosts
+  })
 })
 
 
