@@ -4,10 +4,17 @@ import { Box } from '@mui/material'
 import ChooseMode from './ChooseMode'
 import userContext from "../context/userDetails/userContext";
 import CreatePost from './CreatePost';
+import otherUserContext from '../context/otherUserContext/otherUserContext';
+import Loading from './Loading';
 
 
 const Feeds = () => {
  
+  const OtherUserContext = useContext(otherUserContext);
+  const {setOtherUser,otherUser} = OtherUserContext;
+  useEffect(()=>{
+    setOtherUser({});
+  },[])
   const [posts, setPosts] = useState([]);
 
   const hostApi = process.env.REACT_APP_API_URL;
@@ -68,6 +75,7 @@ const Feeds = () => {
     <br></br>
     <br></br>
     <br></br>
+    {posts.length === 0 && <Loading/>}
     {posts.map((post)=>{
        return (
         <div key={post._id} >

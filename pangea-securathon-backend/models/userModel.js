@@ -33,6 +33,14 @@ const userSchema = new Schema({
    modeLists: {
     type : Array
    },
+   friendRequests:{
+    type: Array,
+    default:[]
+   },
+   invitationsSent:{
+    type:Array,
+    default:[]
+   },
    otherThings : {}
 });
 

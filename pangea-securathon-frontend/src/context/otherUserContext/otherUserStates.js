@@ -1,10 +1,13 @@
-import {useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import otherUserContext from "./otherUserContext";
 import { useNavigate } from "react-router-dom";
+import alertContext from "../alert/alertContext";
 
 
 const OtherUserStates = (props)=>{
     const navigate = useNavigate();
+    const AlertContext = useContext(alertContext);
+    const {setAlert} = AlertContext;
     const [otherUserId, setOtherUserId] = useState("");
     const [otherUser, setOtherUser] = useState({});
 
@@ -26,16 +29,24 @@ const OtherUserStates = (props)=>{
                     }
                 });
                 const response = await fetchOtherUserDetails.json();
+                console.log(response);
                 if (response.msg === "other user data send") {
                     setOtherUser(response.otherUser);
+                }else if(response.msg === "same user"){
+                    navigate("/profile")
+                }else{
+                    navigate("/dashboard");
                 }
-                console.log(response);
                 //if successfull then set otherUsers data to OtherUserhook
             }else{
                 //set login status to false
                 // setLoginStatus(false);
                 console.log("some error");
                 navigate("/")
+                setAlert({
+                    alertMsg:"There is an error loading data",
+                    alertType:"danger"
+                })
             }
         }
     }
@@ -44,7 +55,7 @@ const OtherUserStates = (props)=>{
     },[otherUserId])
 
     return(
-        <otherUserContext.Provider value={{otherUser,fetchOtherUser}} >
+        <otherUserContext.Provider value={{otherUser,fetchOtherUser,setOtherUser,setOtherUserId}} >
           {props.children}
         </otherUserContext.Provider>
     )

@@ -4,7 +4,8 @@ const { PangeaConfig,
         URLIntelService,
         UserIntelService, 
         IPIntelService, 
-        DomainIntelService 
+        DomainIntelService ,
+        RedactService
     } = require("pangea-node-sdk");
 //const pangea = require('pangea-node-sdk'); see services in log
 // this is common
@@ -16,6 +17,8 @@ const ipIntelToken  = process.env.IP_INTEL_TOKEN;  // ip-intel-token
 const domainIntelToken = process.env.DOMAIN_INTEL_TOKEN; //domain-intel token
 const userIntelToken = process.env.USER_INTEL_TOKEN;
 const urlIntelToken = process.env.URL_INTEL_TOKEN;
+const redactToken = process.env.REDACT_TOKEN;
+
 
 //config - think like connecting your app to pangea domain
 const config = new PangeaConfig({ domain: pangeaDomain });
@@ -26,19 +29,15 @@ const ipIntel = new IPIntelService(ipIntelToken,config);
 const domainIntel = new DomainIntelService(domainIntelToken,config);
 const userIntel = new UserIntelService(userIntelToken,config);
 const urlIntel = new URLIntelService(urlIntelToken,config);
-
-// async function testPangeaServices(){
-//     const urlIntelResponse = await urlIntel.reputation(
-//         "http://177.12.6.231:59017/Mozi.m",
-//         {
-//           provider: "crowdstrike"
-//         }
-//     );
-//     const {result,summary} = urlIntelResponse
-//     console.log(result);
-//     console.log(summary);
-// }
-// testPangeaServices();
+const redact = new RedactService(redactToken,config);
+async function testPangeaServices(){
+    const redactResponse = await redact.redact(
+        email="satya@gmail.com",
+        phone="87564516"
+    )
+    //console.log(redactResponse);
+}
+testPangeaServices();
 
 
 //get ip address of user and host
@@ -68,4 +67,4 @@ const hostIpAddress = (req) => {
 
 
 // export modules 
-module.exports = {audit,userIntel,urlIntel, ipIntel,domainIntel, clientIpAddress,hostIpAddress};
+module.exports = {audit,userIntel,urlIntel,redact,ipIntel,domainIntel, clientIpAddress,hostIpAddress};

@@ -8,7 +8,6 @@ const PostCard = (props) => {
   const OtherUserContext = useContext(otherUserContext);
   const {setOtherUserId,fetchOtherUser} = OtherUserContext;
   const navigate = useNavigate();
-  console.log(props);
   return (
     <>
       <Card sx={{margin:"0.3rem 0 0.3rem 0"}}>
@@ -16,7 +15,8 @@ const PostCard = (props) => {
           sx={{cursor:"pointer"}}
           onClick={()=>{
             navigate("/users/profile");
-            fetchOtherUser(props.post.author.id)
+            fetchOtherUser(props.post.author.id);
+            setOtherUserId(props.post.author.id);
             }}
           avatar={
             <Avatar src={props.post.author.profileUrl} alt={props.post.author.name} sx={{ bgcolor: 'red[500]' }} aria-label="recipe">

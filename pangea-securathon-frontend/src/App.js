@@ -17,11 +17,11 @@ function App() {
   return (
     <>
     {/* top priority Browser router */}
+    <AlertStates>
     <BrowserRouter>
     <OtherUserStates>
     <LoadingStates>
     <UserStates>
-    <AlertStates>
     <LoginStates>
     <LoadingStates>
         <Alert/>
@@ -36,11 +36,11 @@ function App() {
         </Routes>
     </LoadingStates>
     </LoginStates> 
-    </AlertStates>
     </UserStates>
     </LoadingStates>
     </OtherUserStates>
     </BrowserRouter>
+    </AlertStates>
     </>
   );
 }
