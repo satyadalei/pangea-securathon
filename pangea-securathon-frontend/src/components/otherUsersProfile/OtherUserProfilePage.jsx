@@ -7,10 +7,14 @@ import otherUserContext from '../../context/otherUserContext/otherUserContext'
 import Loading from '../Loading'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-
+import alertContext from "../../context/alert/alertContext";
 const OtherUserProfilePage = () => {
   const OtherUserContext = useContext(otherUserContext);
   const { otherUser } = OtherUserContext;
+
+  const AlertContext = useContext(alertContext);
+  const {setAlert} = AlertContext;
+
 
   const hostApi = process.env.REACT_APP_API_URL;
   const handleFreindRequest = async () => {
@@ -27,10 +31,14 @@ const OtherUserProfilePage = () => {
       }
     });
     const response = await handleRequest.json();
-    console.log(response);
+    if (response.success !== true ) {
+      setAlert({
+        alertMsg:"There is an problem loading user data. Please try after some time",
+        alertType:"danger"
+      })
+    }
   }
 
-  console.log(otherUser);
   return (
     <div>
       {Object.keys(otherUser).length === 0 && <Loading />}
@@ -62,7 +70,7 @@ const OtherUserProfilePage = () => {
             </p>
             {/* friend request button */}
             {
-              !otherUser.isFreiend &&
+              otherUser.isFreiend === false &&
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
                 <IconButton aria-label="add to favorites">
                   {otherUser.isRequestSent ? <HowToRegIcon sx={{ color: "green" }} /> :

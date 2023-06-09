@@ -37,6 +37,7 @@ const PostCard = (props) => {
         <CardMedia
           component="img"
           height="300"
+          alt={props.post.postDetails.givenName}
           image={props.post.postDetails.postUrl}
         />
         <CardContent>
@@ -54,18 +55,17 @@ const PostCard = (props) => {
               </Typography>
           }
         </CardContent>
-        <CardActions disableSpacing>
+        {/* <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}} />} />
           </IconButton>
           <IconButton >
               <Checkbox
-                // {...label}
                 icon={<BookmarkAddOutlined />}
                 checkedIcon={<Bookmark />}
               />
             </IconButton>
-        </CardActions>
+        </CardActions> */}
       </Card>  
     </>
   )

@@ -45,7 +45,6 @@ const Feeds = () => {
         }
       })
       const fetchPostResponse = await fetchPost.json();
-      console.log(fetchPostResponse);
       if (fetchPostResponse.msg === "posts send") {
         setPosts(fetchPostResponse.posts);
       }else{

@@ -29,7 +29,6 @@ const OtherUserStates = (props)=>{
                     }
                 });
                 const response = await fetchOtherUserDetails.json();
-                console.log(response);
                 if (response.msg === "other user data send") {
                     setOtherUser(response.otherUser);
                 }else if(response.msg === "same user"){

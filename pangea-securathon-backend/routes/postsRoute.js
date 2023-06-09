@@ -186,14 +186,18 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
     }
 });
 router.get("/fetchPosts",authenticateuser,async (req,res)=>{
+  const userId = req.user.userId;
   const happyPosts = await post.find({tag:"post",postType:"happy"});
   const jokePosts = await post.find({tag:"post",postType:"joke"});
   const sadPosts = await post.find({tag:"post",postType:"sad"});
+
+  const mergedArray = [...happyPosts, ...jokePosts, ...sadPosts];
+  const shuffledArray = mergedArray.sort(() => Math.random() - 0.5);
   let allPosts = [];
   res.json({
     "msg":"posts send",
     "success":true,
-    "posts":happyPosts
+    "posts":shuffledArray
   })
 })
 

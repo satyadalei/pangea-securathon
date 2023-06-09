@@ -2,10 +2,15 @@ import React, { useContext } from 'react'
 import userContext from "../../context/userDetails/userContext";
 import { Button, List } from '@mui/material';
 import EachPersonItem from './EachPersonItem';
+import alertContext from "../../context/alert/alertContext"
+
 
 const FriendRequests = () => {
     const UserContext = useContext(userContext);
     const {user} = UserContext;
+
+    const AlertContext = useContext(alertContext);
+    const {setAlert,alert} = AlertContext;
 
     const hostApi = process.env.REACT_APP_API_URL;
     const handleApprove = async (id)=>{
@@ -23,7 +28,17 @@ const FriendRequests = () => {
       })
 
       const response = await addFriend.json();
-      console.log(response);
+      if(response.msg === "added friend successfully"){
+        setAlert({
+          alertMsg:response.detailMsg,
+          alertType:"success"
+        })
+      }else{
+        setAlert({
+          alertMsg:response.detailMsg,
+          alertType:"success"
+        })
+      }
     }
 
   return (

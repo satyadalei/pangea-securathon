@@ -28,7 +28,7 @@ router.get("/fetchUser", authenticateuser, async (req, res) => {
     // means they are different user
     //loop throgh friendlists to check is friend
     for (let i = 0; i < findOtherUser.friendListIds.length; i++) {
-      if (userId === findOtherUser.friendListIds[i]) {
+      if (userId === findOtherUser.friendListIds[i].id) {
         isFriend = true;
         break;
       }
@@ -40,7 +40,7 @@ router.get("/fetchUser", authenticateuser, async (req, res) => {
         break;
       }
     }
-    if (!isFriend) {
+    if(!isFriend) {
       //means user user in not friend of the requesting user
       // then redact email
       let redactResponse = await redact.redact(
@@ -95,53 +95,63 @@ router.get("/smallDetails", authenticateuser, async (req, res) => {
       profileImageUrl: findOtherUser.profileImg.url
     }
     // console.log(findOtherUser);
-      res.json({
-        "msg": "user data sent",
-        "success": true,
-        "smallDetails": responseOtherUserData
-      })
-  }catch(error) {
-      res.json({
-        "msg": "some internal server error",
-        "success": false,
-        "smallDetails": "could not send"
-      })
+    res.json({
+      "msg": "user data sent",
+      "success": true,
+      "smallDetails": responseOtherUserData
+    })
+  } catch (error) {
+    res.json({
+      "msg": "some internal server error",
+      "success": false,
+      "smallDetails": "could not send"
+    })
   }
 })
 
-router.post("/addFriend",authenticateuser,async (req,res)=>{
-  const userId = req.user.userId;
-  const otherUserId = req.headers.otheruserid;
-  const timeStamp = req.headers.timestamp;
-  const findUser = await user.findById(userId);
-  const findOtherUser = await user.findById(otherUserId);
-  //first add new friend to main users friend lists
-  findUser.friendListIds.push({
-    id: otherUserId,
-    time: timeStamp
-  });
-  //remove friend request from main user
-  const newFriendRequestArray = findUser.friendRequests.filter((request)=>{
-    request.sentBy !== otherUserId
-  });
-  findUser.friendRequests = newFriendRequestArray;
-  //now add user to other users friend list
-  findOtherUser.friendListIds.push({
-    id: userId,
-    time: timeStamp
-  })
-  //remove from invitations of other user accounts
-  const newInvitationsArray = findOtherUser.invitationsSent.filter((invitation)=>{
-    invitation.to !== userId
-  })
-  findOtherUser.invitationsSent = newInvitationsArray;
+router.post("/addFriend", authenticateuser, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const otherUserId = req.headers.otheruserid;
+    const timeStamp = req.headers.timestamp;
+    const findUser = await user.findById(userId);
+    const findOtherUser = await user.findById(otherUserId);
+    //first add new friend to main users friend lists
+    findUser.friendListIds.push({
+      id: otherUserId,
+      time: timeStamp
+    });
+    //remove friend request from main user
+    const newFriendRequestArray = findUser.friendRequests.filter((request) => {
+      request.sentBy !== otherUserId
+    });
+    findUser.friendRequests = newFriendRequestArray;
+    //now add user to other users friend list
+    findOtherUser.friendListIds.push({
+      id: userId,
+      time: timeStamp
+    })
+    //remove from invitations of other user accounts
+    const newInvitationsArray = findOtherUser.invitationsSent.filter((invitation) => {
+      invitation.to !== userId
+    })
+    findOtherUser.invitationsSent = newInvitationsArray;
 
-  await findUser.save();
-  await findOtherUser.save();
-  
-  res.json({
-    "msg":"added friend successfully"
-  })
+    await findUser.save();
+    await findOtherUser.save();
+
+    res.json({
+      "msg": "added friend successfully",
+      "success": true,
+      "detailMsg": "Added friend successfully"
+    })
+  } catch (error) {
+    res.json({
+      "msg": "internal server error",
+      "success": false,
+      "detailMsg": "Some internal server error occured"
+    })
+  }
 })
 
 
