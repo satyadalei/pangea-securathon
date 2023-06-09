@@ -6,7 +6,7 @@ import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import MoodIcon from '@mui/icons-material/Mood';
 import {useLocation, useNavigate } from 'react-router-dom';
-
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 const LeftSideBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,6 +60,15 @@ const LeftSideBar = () => {
                 <MoodIcon />
               </ListItemIcon>
               <ListItemText primary="Track Emotions" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem className={`${location.pathname === '/friends' && 'active-nav-item' }`} onClick={()=>{navigate("/friends")}} disablePadding>
+            <ListItemButton  >
+              <ListItemIcon>
+                <Diversity3Icon />
+              </ListItemIcon>
+              <ListItemText primary="Friends" />
             </ListItemButton>
           </ListItem>
 

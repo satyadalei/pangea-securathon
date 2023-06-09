@@ -123,6 +123,12 @@ const Navbar = () => {
           Track Emotions
         </MenuItem>
 
+        <MenuItem
+          className={`${location.pathname === '/friends' && 'active-nav-item-mob'}`}
+          onClick={() => { navigate("/friends") }} >
+          Friends
+        </MenuItem>
+
         <MenuItem onClick={() => { logOut() }} >
           Logout
         </MenuItem>

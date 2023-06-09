@@ -12,6 +12,7 @@ import ProfilePage from "./components/ProfilePage";
 import TrackEmotionsPage from "./components/TrackEmotionsPage";
 import OtherUserProfilePage from "./components/otherUsersProfile/OtherUserProfilePage";
 import OtherUserStates from "./context/otherUserContext/otherUserStates";
+import FriendsPage from "./components/FriendsPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/registration" element={<Registration/>} />
           <Route path="/trackemotions" element={<TrackEmotionsPage/>} />
           <Route path="/users/profile" element={<OtherUserProfilePage/>} />
+          <Route path="/friends" element={<FriendsPage />} />
         </Routes>
     </LoadingStates>
     </LoginStates> 

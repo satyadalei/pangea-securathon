@@ -84,7 +84,30 @@ router.post("/sendFriendRequest", authenticateuser, async (req, res) => {
   })
 })
 
+router.get("/smallDetails", authenticateuser, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const otherUserId = req.headers.otheruserid;
 
+    const findOtherUser = await user.findById(otherUserId).select("-userDetails.password");
+    const responseOtherUserData = {
+      name: findOtherUser.userDetails.fName + " " + findOtherUser.userDetails.lName,
+      profileImageUrl: findOtherUser.profileImg.url
+    }
+    // console.log(findOtherUser);
+      res.json({
+        "msg": "user data sent",
+        "success": true,
+        "smallDetails": responseOtherUserData
+      })
+  }catch(error) {
+      res.json({
+        "msg": "some internal server error",
+        "success": false,
+        "smallDetails": "could not send"
+      })
+  }
+})
 
 
 
