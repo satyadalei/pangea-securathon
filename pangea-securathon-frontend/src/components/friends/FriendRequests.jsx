@@ -6,6 +6,26 @@ import EachPersonItem from './EachPersonItem';
 const FriendRequests = () => {
     const UserContext = useContext(userContext);
     const {user} = UserContext;
+
+    const hostApi = process.env.REACT_APP_API_URL;
+    const handleApprove = async (id)=>{
+      const url = `${hostApi}/api/otherUser/addFriend`;
+      //if approve button clicked add the user to his friend list
+      const authToken = localStorage.getItem("authtoken");
+      const timeStamp = new Date();
+      const addFriend = await fetch(url,{
+         method:"POST",
+         headers:{
+            "authtoken":authToken,
+            "otheruserid":id,
+            "timestamp":timeStamp
+         }
+      })
+
+      const response = await addFriend.json();
+      console.log(response);
+    }
+
   return (
     <div>
         <h1>This is friend requests page</h1>
@@ -23,7 +43,7 @@ const FriendRequests = () => {
               return (
                 <div key={request.sentBy} >
                   <EachPersonItem userId={request.sentBy} />
-                  <Button variant="outlined" size="small">
+                  <Button onClick={()=>{handleApprove(request.sentBy)}} variant="outlined" size="small">
                     Approve
                   </Button>
                   <hr />

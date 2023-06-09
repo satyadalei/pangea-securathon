@@ -109,6 +109,40 @@ router.get("/smallDetails", authenticateuser, async (req, res) => {
   }
 })
 
+router.post("/addFriend",authenticateuser,async (req,res)=>{
+  const userId = req.user.userId;
+  const otherUserId = req.headers.otheruserid;
+  const timeStamp = req.headers.timestamp;
+  const findUser = await user.findById(userId);
+  const findOtherUser = await user.findById(otherUserId);
+  //first add new friend to main users friend lists
+  findUser.friendListIds.push({
+    id: otherUserId,
+    time: timeStamp
+  });
+  //remove friend request from main user
+  const newFriendRequestArray = findUser.friendRequests.filter((request)=>{
+    request.sentBy !== otherUserId
+  });
+  findUser.friendRequests = newFriendRequestArray;
+  //now add user to other users friend list
+  findOtherUser.friendListIds.push({
+    id: userId,
+    time: timeStamp
+  })
+  //remove from invitations of other user accounts
+  const newInvitationsArray = findOtherUser.invitationsSent.filter((invitation)=>{
+    invitation.to !== userId
+  })
+  findOtherUser.invitationsSent = newInvitationsArray;
+
+  await findUser.save();
+  await findOtherUser.save();
+  
+  res.json({
+    "msg":"added friend successfully"
+  })
+})
 
 
 module.exports = router;

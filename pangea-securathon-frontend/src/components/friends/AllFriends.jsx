@@ -19,10 +19,10 @@ const AllFriends = () => {
         {Object.keys(user).length !== 0 && user.friendListIds.length === 0
           ? "You donot have any friends. Make one!"
           : Object.keys(user).length !== 0 &&
-            user.friendListIds.map((id) => {
+            user.friendListIds.map((friend) => {
               return (
-                <div key={id} >
-                  <EachPersonItem userId={id} />
+                <div key={friend.id} >
+                  <EachPersonItem userId={friend.id} />
                   <hr />
                 </div>
               );
