@@ -196,6 +196,9 @@ const CreatePost = () => {
                             <MenuItem value="happy">Happy</MenuItem>
                             <MenuItem value="joke">Joke</MenuItem>
                             <MenuItem value="sad">Sad</MenuItem>
+                            <MenuItem value="inspiring">Inspiring</MenuItem>
+                            <MenuItem value="motivational">Motivational</MenuItem>
+                            <MenuItem value="quote">Quote</MenuItem>
                         </Select>
                     </FormControl>
                     <StyledStack direction="row" gap={1} mb={1} mt={1} >

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './Navbar'
 import { Box, Stack, Typography } from '@mui/material'
 import LeftSideBar from './LeftSideBar'
@@ -15,8 +15,10 @@ const Div = styled('div')(({ theme }) => ({
 
 const TrackEmotionsPage = () => {
   const UserContext = useContext(userContext);
-  const { user } = UserContext;
-
+  const { user,fetchUser } = UserContext;
+  useEffect(()=>{
+    fetchUser();
+  },[])
   function convertTolacaldate(dateStamp){
     const date = new Date(dateStamp);
     const localDate = date.toLocaleDateString();

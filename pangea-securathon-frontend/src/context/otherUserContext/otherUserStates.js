@@ -11,7 +11,6 @@ const OtherUserStates = (props)=>{
     const AlertContext = useContext(alertContext);
     const {setAlert} = AlertContext;
     const [otherUserId, setOtherUserId] = useState("");
-    console.log(otherUserId);
     const [otherUser, setOtherUser] = useState({});
     const hostApi = process.env.REACT_APP_API_URL;
     const url = `${hostApi}/api/otherUser/fetchUser`;

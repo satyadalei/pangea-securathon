@@ -21,7 +21,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 80%;
     max-width: 600px;
     height: 70%;
@@ -39,7 +39,7 @@
     margin-top: 2rem;
     width: 80%;
     height: 60%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 .right-form{
     width: 50%;
@@ -55,7 +55,7 @@
     height: fit-content;
     width: 90%;
     max-width: 600px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding: 1rem;
     display: flex;
     flex-direction: column;

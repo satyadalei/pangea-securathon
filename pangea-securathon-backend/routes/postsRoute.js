@@ -187,13 +187,34 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
 });
 router.get("/fetchPosts",authenticateuser,async (req,res)=>{
   const userId = req.user.userId;
+  const findUser = await user.findById(userId);
+  const lastUpdatedMode = findUser.modeLists[findUser.modeLists.length-1].mode;
+ 
+  //possible postTypes --> happy,sad,joke,qoute,motivational,inspiring
   const happyPosts = await post.find({tag:"post",postType:"happy"});
   const jokePosts = await post.find({tag:"post",postType:"joke"});
   const sadPosts = await post.find({tag:"post",postType:"sad"});
-
-  const mergedArray = [...happyPosts, ...jokePosts, ...sadPosts];
-  const shuffledArray = mergedArray.sort(() => Math.random() - 0.5);
+  const motivationalPosts = await post.find({tag:"post",postType:"motivational"});
+  const inspiringPosts = await post.find({tag:"post",postType:"inspiring"});
+  const quotePosts = await post.find({tag:"post",postType:"qoute"});
+  
   let allPosts = [];
+
+   //all emotions --> sad, happy, fatigue, depressed, motivated
+   if (lastUpdatedMode === "happy") {
+    allPosts = [...happyPosts, ...jokePosts, ...motivationalPosts]
+   }else if(lastUpdatedMode === "sad"){
+    allPosts = [...motivationalPosts, ...quotePosts, ...inspiringPosts, ...jokePosts]
+   }else if (lastUpdatedMode === "fatigue") {
+     allPosts = [...quotePosts,...jokePosts,...happyPosts]
+    }else if (lastUpdatedMode === "depressed") {
+       allPosts = [...inspiringPosts,...quotePosts,...jokePosts]
+   }else if(lastUpdatedMode === "motivated"){
+    allPosts = [...inspiringPosts,...quotePosts,...jokePosts,...quotePosts, ...motivationalPosts]
+   }else{
+    allPosts = [...inspiringPosts,...quotePosts,...jokePosts,...quotePosts, ...motivationalPosts,...sadPosts]
+   }
+  const shuffledArray = allPosts.sort(() => Math.random() - 0.5);
   res.json({
     "msg":"posts send",
     "success":true,

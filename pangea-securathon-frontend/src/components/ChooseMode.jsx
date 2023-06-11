@@ -136,6 +136,18 @@ const ChooseMode = () => {
               control={<Radio />}
               label="Fatigue"
             />
+             <FormControlLabel
+              onClick={() => handleMode("depressed")}
+              value="depressed"
+              control={<Radio />}
+              label="Depressed"
+            />
+             <FormControlLabel
+              onClick={() => handleMode("motivated")}
+              value="motivated"
+              control={<Radio />}
+              label="Motivated"
+            />
           </RadioGroup>
         </div>
       </Box>

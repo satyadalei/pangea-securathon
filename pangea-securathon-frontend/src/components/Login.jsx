@@ -5,7 +5,7 @@ import logInContext from "../context/loginStatus/loginContext";
 import alertContext from "../context/alert/alertContext";
 import loadingContext from "../context/loading/loadingContext";
 import userContext from "../context/userDetails/userContext";
-
+// import loginImage from "../images/login_illustration.png"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ const Login = () => {
             This is your happy <br /> space
           </h2>
           <div className="illustration-img">
-            <img src="" alt="An illustraion of happy environment" />
+            {/* <img  alt="An illustraion of happy environment" /> */}
           </div>
         </div>
       </div>
@@ -91,9 +91,9 @@ const Login = () => {
                 <label htmlFor="password">Password</label>
                 <input onChange={handleChange} type="password" value={loginCredentials.password} name="password" />
               </div>
-              <p className="forget-password">
+              {/* <p className="forget-password">
                 <a href="/">Forget Password?</a>
-              </p>
+              </p> */}
               <button onClick={handleSubmit} className="login my-2">Login</button>
             </form>
             <p className="register my-2">

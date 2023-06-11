@@ -109,7 +109,7 @@ const Registration = () => {
             free space!
           </h2>
           <div className="illustration-img">
-            <img src="" alt="An illustraion of happy environment" />
+            {/* <img src="" alt="An illustraion of happy environment" /> */}
           </div>
         </div>
       </div>
