@@ -57,21 +57,21 @@ const Navbar = () => {
 
   return (
     <AppBar position="sticky">
-      <StyledToolbar>
-        <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
-          Happy You
+      <StyledToolbar sx={{margin:"0.2rem"}} >
+        <Typography variant="h6">
+          Happy You &nbsp;
+        <InsertEmoticonIcon />
         </Typography>
-        <InsertEmoticonIcon sx={{ display: { xs: "block", sm: "none" } }} />
-        <Search >
+        {/* <Search >
           <InputBase fullWidth placeholder="Search.." />
-        </Search>
+        </Search> */}
         <Icons sx={{ display: { xs: "none", sm: "flex" } }} >
-          <Badge badgeContent={4} color="error">
+          {/* <Badge badgeContent={4} color="error">
             <Mail />
           </Badge>
           <Badge badgeContent={3} color="error">
             <Notifications />
-          </Badge>
+          </Badge> */}
           <Typography variant="div" sx={{ display: "block" }} >
             {Object.keys(user).length === 0 ? "" : user.userDetails.fName + " " + user.userDetails.lName}
           </Typography>
@@ -84,7 +84,7 @@ const Navbar = () => {
           <Typography variant="div" sx={{ display: "block" }} >
             {Object.keys(user).length === 0 ? "" : user.userDetails.fName}
           </Typography>
-          <Avatar sx={{ width: "30", height: "30" }}
+          <Avatar sx={{ width: "30", height: "30", marginRight:"0.4rem"}}
             // to check whether there is empty object or not -> coz if is is empty object then user.userDetails.fName can not be accessed
             alt={Object.keys(user).length === 0 ? "" : user.userDetails.fName}
             src={Object.keys(user).length === 0 ? "" : user.profileImg ? user.profileImg.url : ""}

@@ -43,6 +43,7 @@ router.get("/fetchUser", authenticateuser, async (req, res) => {
     if(!isFriend) {
       //means user user in not friend of the requesting user
       // then redact email
+      //*******pangea service - redact personal information
       let redactResponse = await redact.redact(
         email = findOtherUser.email
       );
