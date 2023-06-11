@@ -95,6 +95,7 @@ const CreatePost = () => {
             const uploadPostResponse = await uploadPost.json();
             if (uploadPostResponse.msg === "post uploaded") {
                 //post uploade successfully
+                console.log(uploadPostResponse);
                 setLoading(false);
                 setAlert({
                     alertMsg:uploadPostResponse.detailMsg,
@@ -159,7 +160,7 @@ const CreatePost = () => {
                             <Add />
                         </Fab>
                     </Tooltip>
-                    <span>Create New</span>
+                    <span>Create New Post</span>
                 </Box>
             </div>
             <StyledModal

@@ -22,9 +22,13 @@ const PostCard = (props) => {
             fetchOtherUser(props.post.author.id);
             setOtherUserId(props.post.author.id);
             }}
-          avatar={
-            <Avatar src={props.post.author.profileUrl} alt={props.post.author.name} sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
+            
+          avatar={ props.post.author !== undefined ?
+            <Avatar src={ props.post.author.profileUrl} 
+            alt={props.post.author.name} sx={{ bgcolor: 'red[500]' }} aria-label="recipe">
             </Avatar>
+            // ""
+            : ""
           }
           // action={
           //   <IconButton >

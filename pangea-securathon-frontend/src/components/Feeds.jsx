@@ -75,7 +75,7 @@ const Feeds = () => {
     <br></br>
     <br></br>
     {posts.length === 0 && <Loading/>}
-    {posts.map((post)=>{
+    {posts.length !== 0 && posts.map((post)=>{
        return (
         <div key={post._id} >
           <PostCard post={post} />

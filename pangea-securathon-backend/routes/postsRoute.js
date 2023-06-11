@@ -85,13 +85,13 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
                             uploadedDocUrl = downloadURL;
                             //----------upload done now save to mongo DB ---------
                             const newPost = new post({
-                                auther: {
+                                author: {
                                     id: findThatUser._id,
                                     name: findThatUser.userDetails.fName + " " + findThatUser.userDetails.lName,
                                     profileUrl: findThatUser.profileImg.url || ""
                                 },
                                 postType: postType,
-                                postDeatils: {
+                                postDetails:{
                                     fileType: fileType,
                                     postUrl: downloadURL,
                                     givenName: docGivenName,
@@ -133,13 +133,13 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
                         uploadedDocUrl = downloadURL;
                         //----------upload done now save to mongo DB ---------
                         const newPost = new post({
-                            auther: {
+                            author: {
                                 id: findThatUser._id,
                                 name: findThatUser.userDetails.fName + " " + findThatUser.userDetails.lName,
                                 profileUrl: findThatUser.profileImg.url || ""
                             },
                             postType: postType,
-                            postDeatils: {
+                            postDetails: {
                                 fileType: fileType,
                                 postUrl: downloadURL,
                                 givenName: docGivenName,
@@ -188,8 +188,9 @@ router.post("/uploadPost", authenticateuser, upload.single("postImage"), async (
 router.get("/fetchPosts",authenticateuser,async (req,res)=>{
   const userId = req.user.userId;
   const findUser = await user.findById(userId);
-  const lastUpdatedMode = findUser.modeLists[findUser.modeLists.length-1].mode;
+  const lastUpdatedMode = findUser.modeLists.length !== 0 ? findUser.modeLists[findUser.modeLists.length-1].mode : "newUser";
  
+
   //possible postTypes --> happy,sad,joke,qoute,motivational,inspiring
   const happyPosts = await post.find({tag:"post",postType:"happy"});
   const jokePosts = await post.find({tag:"post",postType:"joke"});
@@ -212,7 +213,7 @@ router.get("/fetchPosts",authenticateuser,async (req,res)=>{
    }else if(lastUpdatedMode === "motivated"){
     allPosts = [...inspiringPosts,...quotePosts,...jokePosts,...quotePosts, ...motivationalPosts]
    }else{
-    allPosts = [...inspiringPosts,...quotePosts,...jokePosts,...quotePosts, ...motivationalPosts,...sadPosts]
+    allPosts = [...inspiringPosts,...quotePosts,...jokePosts,...quotePosts, ...motivationalPosts]
    }
   const shuffledArray = allPosts.sort(() => Math.random() - 0.5);
   res.json({
