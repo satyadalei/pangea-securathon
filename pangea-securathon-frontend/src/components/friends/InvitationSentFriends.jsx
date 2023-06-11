@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import userContext from "../../context/userDetails/userContext";
 import { List } from '@mui/material';
 import EachPersonItem from './EachPersonItem';
 
+
 const InvitationSentFriends = () => {
     const UserContext = useContext(userContext);
     const {user} = UserContext;
+   
   return (
     <div>
         <h1>Invitations sent by you</h1>

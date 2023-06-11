@@ -81,7 +81,9 @@ router.post("/sendFriendRequest", authenticateuser, async (req, res) => {
   });
   await findUser.save();
   res.json({
-    "msg": "friend request sent"
+    "msg": "friend request sent",
+    "success": true,
+    "detailMsg":"friend request sent successfully"
   })
 })
 

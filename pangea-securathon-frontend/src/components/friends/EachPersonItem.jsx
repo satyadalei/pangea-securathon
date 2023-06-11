@@ -1,5 +1,5 @@
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Skeleton} from '@mui/material'
-import React, {useState } from 'react'
+import React, {useEffect, useState } from 'react'
 
 const EachPersonItem = (props) => {
     // fetch user by id & show data
@@ -19,7 +19,6 @@ const EachPersonItem = (props) => {
             }
         })
         const response = await fetchOtherUserByIds.json();
-        console.log(response);
         if (response.msg === "user data sent") {
             setOtherUserById({
                 name: response.smallDetails.name,
@@ -27,10 +26,10 @@ const EachPersonItem = (props) => {
             })
         }
     }
-    fetchOtherUserById()
-    // useEffect(() => {
-    //     fetchOtherUserById();
-    // }, [])
+    // fetchOtherUserById()
+    useEffect(() => {
+        fetchOtherUserById();
+    }, [])
     return (
         <>
             <div >

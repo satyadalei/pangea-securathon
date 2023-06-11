@@ -18,6 +18,7 @@ const OtherUserProfilePage = () => {
 
   const hostApi = process.env.REACT_APP_API_URL;
   const handleFreindRequest = async () => {
+    console.log("hello");
     const url = `${hostApi}/api/otherUser/sendFriendRequest`;
     const authToken = localStorage.getItem("authtoken");
     //handle request 
@@ -31,14 +32,14 @@ const OtherUserProfilePage = () => {
       }
     });
     const response = await handleRequest.json();
-    if (response.success !== true ) {
+    if (response.success) {
       setAlert({
-        alertMsg:"There is an problem loading user data. Please try after some time",
-        alertType:"danger"
+        alertMsg:"Friend Request sent successfully",
+        alertType:"success"
       })
     }
   }
-
+  console.log(otherUser);
   return (
     <div>
       {Object.keys(otherUser).length === 0 && <Loading />}
@@ -70,14 +71,17 @@ const OtherUserProfilePage = () => {
             </p>
             {/* friend request button */}
             {
-              otherUser.isFreiend === false &&
+              !otherUser.isFreiend &&
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
+              {/* this dive will be show if not frind */}
                 <IconButton aria-label="add to favorites">
                   {otherUser.isRequestSent ? <HowToRegIcon sx={{ color: "green" }} /> :
-                    <Checkbox
-                      icon={<PersonAddIcon onClick={handleFreindRequest}  />}
-                      checkedIcon={<HowToRegIcon sx={{ color: "green" }} />}>
-                    </Checkbox>
+                    <div onClick={handleFreindRequest} >
+                      <Checkbox
+                        icon={<PersonAddIcon/>}
+                        checkedIcon={<HowToRegIcon sx={{ color: "green" }} />}>
+                      </Checkbox>
+                    </div>
                   }
                 </IconButton>
                 <p style={{ marginBottom: "0" }} >

@@ -7,7 +7,7 @@ import alertContext from "../../context/alert/alertContext"
 
 const FriendRequests = () => {
     const UserContext = useContext(userContext);
-    const {user} = UserContext;
+    const {user,fetchUser} = UserContext;
 
     const AlertContext = useContext(alertContext);
     const {setAlert} = AlertContext;
@@ -29,6 +29,7 @@ const FriendRequests = () => {
 
       const response = await addFriend.json();
       if(response.msg === "added friend successfully"){
+        fetchUser();
         setAlert({
           alertMsg:response.detailMsg,
           alertType:"success"
@@ -36,7 +37,7 @@ const FriendRequests = () => {
       }else{
         setAlert({
           alertMsg:response.detailMsg,
-          alertType:"success"
+          alertType:"danger"
         })
       }
     }

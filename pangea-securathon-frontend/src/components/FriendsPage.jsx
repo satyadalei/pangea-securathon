@@ -1,14 +1,20 @@
 import { Box, Button, Stack } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import LeftSideBar from './LeftSideBar'
 import RightSideBar from './RightSideBar'
 import InvitationSentFriends from './friends/InvitationSentFriends'
 import AllFriends from './friends/AllFriends'
 import FriendRequests from './friends/FriendRequests'
+import userContext from '../context/userDetails/userContext'
 
 const FriendsPage = () => {
   const [current, setCurrent] = useState("all-friend");
+  const UserContext = useContext(userContext);
+  const {fetchUser} = UserContext;
+  useEffect(()=>{
+    fetchUser();
+  },[])
   return (
     <div>
         <Box>
