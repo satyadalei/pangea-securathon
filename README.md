@@ -16,11 +16,11 @@ There is a file "pangea/pangea.js" which posses all the required pangea api serv
 The files where I have used pangeas apis are listed below <br>
 (1) ./server.js (/pangea-securathon-backend/server.js) (services -> audit log api) : --- Line no 48 --- <br>
 (2) ./database.js (services -> audit log api) : --- Line no 11,22 --- <br>
-&nbsp;&nbsp; In the above two I am loging the server and database connection statementsn using <b>audit log</b>.
+&nbsp;&nbsp; In the above two I am loging the server and database connection statementsn using <b>audit log</b>. <br>
 (3) ./routes/otherUserRoute.js (services -> redact api) : --- Line no 47 --- <br>
-&nbsp;&nbsp; When one user try to view profile of other use (if they are not friend) then whose profile is being viewed, his/her email id will be hidden using <b>redact api</b>.
+&nbsp;&nbsp; When one user try to view profile of other use (if they are not friend) then whose profile is being viewed, his/her email id will be hidden using <b>redact api</b>. <br>
 (4) ./routes/postRoute.js (services -> url intel,audit) : --- Line no 50 to 60 ,63, 173 --- <br>
-&nbsp;&nbsp; When one user tries to uploads an post along with added link, this link is checked using pangea <b>url intel</b> api to detect whether it is malicious or not. If link found malicious then post upload will be discarded with a message.
+&nbsp;&nbsp; When one user tries to uploads an post along with added link, this link is checked using pangea <b>url intel</b> api to detect whether it is malicious or not. If link found malicious then post upload will be discarded with a message. <br>
 
 (5) ./routes/userRoute.js (services -> audit log, user intel) : ---line no 41, 56 to 59, 65, 90, 126,   176, 195, 212 <br>
 &nbsp;&nbsp; When a new user registers then behind the server it's email address is checked using <b>user intel</b> api whether it is breached or not?
