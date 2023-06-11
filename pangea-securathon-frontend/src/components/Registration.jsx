@@ -151,6 +151,9 @@ const Registration = () => {
                     <input onChange={handleChange} value={credentials.cPassword} type="password" name="cPassword" required  />
                 </div>
               </div>
+              {credentials.password.length < 6 &&
+              <p style={{fontSize:"13px",color:"red"}} >Password must be atleast 6 characters.</p>
+              }
               <button onClick={handleSubmit} className="login my-2">
                 Register
               </button>
