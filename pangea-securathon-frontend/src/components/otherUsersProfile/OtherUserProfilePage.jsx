@@ -39,7 +39,7 @@ const OtherUserProfilePage = () => {
       })
     }
   }
-  console.log(otherUser);
+  console.log(otherUser.isFreiend);
   return (
     <div>
       {Object.keys(otherUser).length === 0 && <Loading />}
@@ -71,8 +71,8 @@ const OtherUserProfilePage = () => {
             </p>
             {/* friend request button */}
             {
-              !otherUser.isFreiend &&
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
+              otherUser.isFriend === false &&
+              (<div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} >
               {/* this dive will be show if not frind */}
                 <IconButton aria-label="add to favorites">
                   {otherUser.isRequestSent ? <HowToRegIcon sx={{ color: "green" }} /> :
@@ -89,7 +89,7 @@ const OtherUserProfilePage = () => {
                    "Send Freiend Request"
                 }
                 </p>
-              </div>
+              </div>)
             }
             {/* users posts */}
             <hr />
