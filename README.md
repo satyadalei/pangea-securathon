@@ -14,8 +14,8 @@ There is a file "pangea/pangea.js" which posses all the required pangea api serv
 [***Please note you can also directly search "pangea service" or "pangea" exacly to look up where I have used pangea services incase you have difficulties finding them. Everywhere I used pangeas's apis I have mentioned -"pangea service" along with its type of service.]
 
 The files where I have used pangeas apis are listed below <br>
-(1) ./server.js (/pangea-securathon-backend/server.js) (services -> audit log api) : --- Line no 48 ---
-(2) ./database.js (services -> audit log api) : --- Line no 11,22 ---
-(3) ./routes/otherUserRoute.js (services -> redact api) : --- Line no 47 ---
-(4) ./routes/postRoute.js (services -> url intel,audit) : --- Line no 50 to 60 ,63, 173 ---
-(5) ./routes/userRoute.js (services -> audit log, user intel) : ---line no 41, 56 to 59, 65, 90, 126,   176, 195, 212
+(1) ./server.js (/pangea-securathon-backend/server.js) (services -> audit log api) : --- Line no 48 --- <br>
+(2) ./database.js (services -> audit log api) : --- Line no 11,22 --- <br>
+(3) ./routes/otherUserRoute.js (services -> redact api) : --- Line no 47 --- <br>
+(4) ./routes/postRoute.js (services -> url intel,audit) : --- Line no 50 to 60 ,63, 173 --- <br>
+(5) ./routes/userRoute.js (services -> audit log, user intel) : ---line no 41, 56 to 59, 65, 90, 126,   176, 195, 212 <br>
