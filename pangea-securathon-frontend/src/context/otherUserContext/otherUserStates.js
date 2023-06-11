@@ -1,4 +1,6 @@
-import {useContext, useEffect, useState } from "react";
+import {useContext, 
+    // useEffect, 
+    useState } from "react";
 import otherUserContext from "./otherUserContext";
 import { useNavigate } from "react-router-dom";
 import alertContext from "../alert/alertContext";
@@ -9,8 +11,8 @@ const OtherUserStates = (props)=>{
     const AlertContext = useContext(alertContext);
     const {setAlert} = AlertContext;
     const [otherUserId, setOtherUserId] = useState("");
+    console.log(otherUserId);
     const [otherUser, setOtherUser] = useState({});
-
     const hostApi = process.env.REACT_APP_API_URL;
     const url = `${hostApi}/api/otherUser/fetchUser`;
     const fetchOtherUser = async (id)=>{
@@ -49,9 +51,9 @@ const OtherUserStates = (props)=>{
             }
         }
     }
-    useEffect(()=>{
-        fetchOtherUser();
-    },[otherUserId])
+    // useEffect(()=>{
+    //     fetchOtherUser();
+    // },[otherUserId])
 
     return(
         <otherUserContext.Provider value={{otherUser,fetchOtherUser,setOtherUser,setOtherUserId}} >

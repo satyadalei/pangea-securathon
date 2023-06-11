@@ -10,7 +10,7 @@ const FriendRequests = () => {
     const {user} = UserContext;
 
     const AlertContext = useContext(alertContext);
-    const {setAlert,alert} = AlertContext;
+    const {setAlert} = AlertContext;
 
     const hostApi = process.env.REACT_APP_API_URL;
     const handleApprove = async (id)=>{

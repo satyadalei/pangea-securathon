@@ -1,6 +1,10 @@
 import React, { useContext } from 'react'
-import { Bookmark, BookmarkAddOutlined, Favorite, FavoriteBorder } from '@mui/icons-material'
-import { Avatar,Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Typography } from '@mui/material'
+// import { Bookmark, BookmarkAddOutlined, Favorite, FavoriteBorder } from '@mui/icons-material'
+import { Avatar,Card,
+  //  CardActions, 
+   CardContent, CardHeader, CardMedia, 
+  //  Checkbox, IconButton,
+   Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import otherUserContext from "../context/otherUserContext/otherUserContext"
 

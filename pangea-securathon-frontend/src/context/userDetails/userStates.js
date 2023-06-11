@@ -1,4 +1,6 @@
-import {useEffect, useState } from "react";
+import {
+    // useEffect, 
+    useState } from "react";
 import userContext from "./userContext";
 const UserStates = (props) => {
     const [user, setUser] = useState({});
@@ -27,9 +29,9 @@ const UserStates = (props) => {
             localStorage.clear("authtoken")
         }
     }
-    useEffect(()=>{
-        fetchUser();
-    },[])
+    // useEffect(()=>{
+    //     fetchUser();
+    // },[])
 
     return (
         <userContext.Provider value={{ user, setUser, fetchUser }}>

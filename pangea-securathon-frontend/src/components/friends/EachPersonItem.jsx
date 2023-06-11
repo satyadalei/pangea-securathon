@@ -1,5 +1,5 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemText, Skeleton, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Avatar, ListItem, ListItemAvatar, ListItemText, Skeleton} from '@mui/material'
+import React, {useState } from 'react'
 
 const EachPersonItem = (props) => {
     // fetch user by id & show data
@@ -27,9 +27,10 @@ const EachPersonItem = (props) => {
             })
         }
     }
-    useEffect(() => {
-        fetchOtherUserById();
-    }, [])
+    fetchOtherUserById()
+    // useEffect(() => {
+    //     fetchOtherUserById();
+    // }, [])
     return (
         <>
             <div >
